@@ -1,0 +1,112 @@
+---
+title: "Milestone Report: Swiftkey Coursera Data Science Capstone"
+author: "Alex Gascoigne"
+date: "March 20, 2016"
+output: html_document
+---
+
+## Executive Summary
+
+## Basic Summaries
+
+The dataset is comprised of three files in English; these will be kept separate since
+they likely have different n-gram statistics.  These are summarized below:
+
+### en_US.blogs.txt
+899,288 lines
+37,334,690 words
+
+### en_US.news.txt
+1,010,242 lines
+34,372,720 words
+
+### en_US.twitter.txt
+2,360,148 lines
+30,374,206 words
+
+For this report, only 5% of the data was read in randomly to obtain 2-gram and 3-gram
+frequency counts with a reasonable running time.  The R packages 'tm' and 'Rweka' provide
+the string regularization, tokenization, stemming, and 2-gram and 3-gram generation functions.
+
+## Plots
+
+The following plots show the top 15 words, 2-grams, and 3-grams for the blogs data file
+(news and twitter files skipped to keep this report brief):
+
+```{r, echo=FALSE, fig.height=4, fig.width=6}
+library(ggplot2)
+
+ggplot(b1[1:15,],aes())+geom_bar(stat="identity",aes(x,y))+coord_flip() + scale_y_continuous('') + scale_x_discrete('') +
+        labs(x="ngram",y="Count",title="Blogs Most Frequent Words")
+
+ggplot(b2[1:15,],aes())+geom_bar(stat="identity",aes(x,y))+coord_flip() + scale_y_continuous('') + scale_x_discrete('') +
+        labs(x="ngram",y="Count",title="Blogs 2-gram")
+
+ggplot(b3[1:15,],aes())+geom_bar(stat="identity",aes(x,y))+coord_flip() + scale_y_continuous('') + scale_x_discrete('') +
+        labs(x="ngram",y="Count",title="Blogs 3-gram")
+
+```
+
+## Questions
+
+Task 2 gave several questions to answer about the word and phrase frequencies.
+
+1.  Some words are more frequent than others -- what are the distributions of word frequencies.
+
+This can be answered with a histogram of the log of the word frequencies, as shown below:
+
+```{r, echo=FALSE}
+hist(x=log(b1$y),xlab="Log of Frequency",ylab="Count",title="Histogram of Words")
+```
+
+2.  What are the frequencies of 2-grams and 3-grams in the dataset?
+
+Again, histograms are shown for the 2-gram and 3-gram frequencies:
+
+```{r, echo=FALSE}
+hist(x=log(b2$y),xlab="Log of Frequency",ylab="Count",title="Histogram of 2-Grams")
+```
+
+```{r, echo=FALSE}
+hist(x=log(b3$y),xlab="Log of Frequency",ylab="Count",title="Histogram of 3-Grams")
+```
+
+3.  How many unique words do you need in a frequency sorted dictionary to cover 50% of all
+words in the language? 90%?
+
+We can use the following R code:
+
+```{r,echo=TRUE}
+limit<-sum(b1$y)*0.5
+m<-min(which(cumsum(b1$y)>limit))
+pc<-m/length(b1$y)*100
+print(pc)
+
+limit<-sum(b1$y)*0.9
+m<-min(which(cumsum(b1$y)>limit))
+pc<-m/length(b1$y)*100
+print(pc)
+```
+
+It appears that it will only take 16.8% to cover 90% of the English language. (1% for 50%.)
+
+4. How do you evaluate how many of the words come from foreign languages?
+
+This may be a problem with the dataset as given, since it is supposed to be English only. It is
+probably safe to ignore this problem.
+
+5. Can you think of a way to increase the coverage -- identifying words that may not be in the
+corpora or using a smaller number of words in the dictionary to cover the same number of phrases?
+
+Stemming is used to reduce the number of words already.  
+
+## Prediction
+
+It appears we can use the 20% most frequently used words and phrases to build the predictor.
+
+## Appendix: R Code
+
+The code used to produce this report is available on github:
+
+https://github.com/agascoig/capstone
+
