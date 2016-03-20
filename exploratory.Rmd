@@ -102,7 +102,15 @@ Stemming is used to reduce the number of words already.
 
 ## Prediction
 
-It appears we can use the 20% most frequently used words and phrases to build the predictor.
+It appears we can use the 20% most frequently used words and phrases to build a simple predictor.
+
+Task 3 - modeling suggests storing an n-gram model using Markov Chains. The task also suggests
+we need to build n-gram models based on 1,2,3 and 4 words. So the work in this report will have
+to be extended to 4-grams, which may require too much memory to be practical.  
+
+## References
+
+1.  n-gram.  Wikipedia.  https://en.wikipedia.org/wiki/N-gram
 
 ## Appendix: R Code
 
