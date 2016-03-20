@@ -7,6 +7,10 @@ output: html_document
 
 ## Executive Summary
 
+This report is to display that the data is being worked on for the Coursera Swiftkey Capstone
+project, which involves creating a predictive-text Shiny application.  The goals for the
+eventual app are to use few resources (memory, storage) while providing high prediction accuracy.
+
 ## Basic Summaries
 
 The dataset is comprised of three files in English; these will be kept separate since
@@ -30,6 +34,10 @@ the string regularization, tokenization, stemming, and 2-gram and 3-gram generat
 
 ## Plots
 
+```{r, echo=FALSE}
+source("ngram.R")
+```
+
 The following plots show the top 15 words, 2-grams, and 3-grams for the blogs data file
 (news and twitter files skipped to keep this report brief):
 
@@ -37,13 +45,13 @@ The following plots show the top 15 words, 2-grams, and 3-grams for the blogs da
 library(ggplot2)
 
 ggplot(b1[1:15,],aes())+geom_bar(stat="identity",aes(x,y))+coord_flip() + scale_y_continuous('') + scale_x_discrete('') +
-        labs(x="ngram",y="Count",title="Blogs Most Frequent Words")
+        labs(x="ngram",y="Count",main="Blogs Most Frequent Words")
 
 ggplot(b2[1:15,],aes())+geom_bar(stat="identity",aes(x,y))+coord_flip() + scale_y_continuous('') + scale_x_discrete('') +
-        labs(x="ngram",y="Count",title="Blogs 2-gram")
+        labs(x="ngram",y="Count",main="Blogs 2-gram")
 
 ggplot(b3[1:15,],aes())+geom_bar(stat="identity",aes(x,y))+coord_flip() + scale_y_continuous('') + scale_x_discrete('') +
-        labs(x="ngram",y="Count",title="Blogs 3-gram")
+        labs(x="ngram",y="Count",main="Blogs 3-gram")
 
 ```
 
@@ -56,7 +64,7 @@ Task 2 gave several questions to answer about the word and phrase frequencies.
 This can be answered with a histogram of the log of the word frequencies, as shown below:
 
 ```{r, echo=FALSE}
-hist(x=log(b1$y),xlab="Log of Frequency",ylab="Count",title="Histogram of Words")
+hist(x=log(b1$y),xlab="Log of Frequency",ylab="Count",main="Histogram of Words")
 ```
 
 2.  What are the frequencies of 2-grams and 3-grams in the dataset?
@@ -64,11 +72,11 @@ hist(x=log(b1$y),xlab="Log of Frequency",ylab="Count",title="Histogram of Words"
 Again, histograms are shown for the 2-gram and 3-gram frequencies:
 
 ```{r, echo=FALSE}
-hist(x=log(b2$y),xlab="Log of Frequency",ylab="Count",title="Histogram of 2-Grams")
+hist(x=log(b2$y),xlab="Log of Frequency",ylab="Count",main="Histogram of 2-Grams")
 ```
 
 ```{r, echo=FALSE}
-hist(x=log(b3$y),xlab="Log of Frequency",ylab="Count",title="Histogram of 3-Grams")
+hist(x=log(b3$y),xlab="Log of Frequency",ylab="Count",main="Histogram of 3-Grams")
 ```
 
 3.  How many unique words do you need in a frequency sorted dictionary to cover 50% of all
@@ -93,12 +101,13 @@ It appears that it will only take 16.8% to cover 90% of the English language. (1
 4. How do you evaluate how many of the words come from foreign languages?
 
 This may be a problem with the dataset as given, since it is supposed to be English only. It is
-probably safe to ignore this problem.
+probably safe to ignore this problem, although I have seen some unicode characters in the data file.
 
 5. Can you think of a way to increase the coverage -- identifying words that may not be in the
 corpora or using a smaller number of words in the dictionary to cover the same number of phrases?
 
-Stemming is used to reduce the number of words already.  
+Stemming is used to reduce the number of words already.  It may be possible to reduce the
+number of phrases by identifying synonyms and merging phrases.
 
 ## Prediction
 

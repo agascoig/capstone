@@ -33,22 +33,11 @@ source('ngramfreq.R')
 
 print('Creating 1-gram blog frequency table')
 b1<-ngramfreq(ovid_blogs,1,1)
-print('Create 1-gram news frequency table')
-n1<-ngramfreq(ovid_news,1,1)
-print('Create 1-gram twitter frequency table')
-t1<-ngramfreq(ovid_twitter,1,1)
 
 print('Creating 2-gram blog frequency table')
 b2<-ngramfreq(ovid_blogs,2,2)
-print('Create 2-gram news frequency table')
-n2<-ngramfreq(ovid_news,2,2)
-print('Create 2-gram twitter frequency table')
-t2<-ngramfreq(ovid_twitter,2,2)
 
 print('Creating 3-gram blog frequency table')
 b3<-ngramfreq(ovid_blogs,3,3)
-print('Create 3-gram news frequency table')
-n3<-ngramfreq(ovid_news,3,3)
-print('Create 3-gram twitter frequency table')
-t3<-ngramfreq(ovid_twitter,3,3)
+
 
